@@ -1,31 +1,42 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import type { RootState } from '../../store'
+import {IProducts} from "../../../shared/interfaces/app.interface";
 
 // Define a type for the slice state
 interface CounterState {
-    value: number
-    items: any[]
+    countItems: number
+    Products: IProducts[]
+    isOpen: boolean
 }
 
 // Define the initial state using that type
 const initialState: CounterState = {
-    value: 0,
-    items: [],
+    countItems: 0,
+    Products: [],
+    isOpen: false
 }
 
 export const itemsSlice = createSlice({
     name: 'items',
     initialState,
     reducers: {
-        increment: state => {
-            state.value += 1
+        cartLength: state => {
+            state.countItems = state.Products.length;
         },
-        decrement: state => {
-            state.value -= 1
+        cartAdd: (state, action: PayloadAction<any>) => {
+            // state.Products.push(action.payload);
+
+            cartLength();
         },
-        // Use the PayloadAction type to declare the contents of `action.payload`
-        incrementByAmount: (state, action: PayloadAction<number>) => {
-            state.value += action.payload
+        cartRemove: (state, action: PayloadAction<any>) => {
+            state.Products = state.Products.filter((item: any) => item.id !== action.payload.id);
+            cartLength();
+        },
+        cartClear: (state) => {
+            state.Products = [];
+            cartLength();
+        },
+        toggleCart: (state,action: PayloadAction<boolean>) => {
+            state.isOpen = action.payload;
         }
     }
 })
@@ -33,7 +44,7 @@ export const itemsSlice = createSlice({
 // export const { increment, decrement, incrementByAmount } = counterSlice.actions
 
 // export const selectCount = (state: RootState) => state.value
-export const { incrementByAmount } = itemsSlice.actions;
+export const { cartLength,cartAdd,cartRemove,cartClear,toggleCart } = itemsSlice.actions;
 
 
 export default itemsSlice.reducer

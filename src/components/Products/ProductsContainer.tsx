@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {IProducts} from "../../app/app.interface";
+import {IProducts} from "../../shared/interfaces/app.interface";
 import ProductItem from "./ProductItem/ProductItem";
 interface ProductsContainerProps {
     arrProducts: IProducts[]
@@ -7,14 +7,16 @@ interface ProductsContainerProps {
 
 const ProductsContainer:FC<ProductsContainerProps> = ({arrProducts}) => {
     return (
-        <div className="grid grid-cols-4 gap-x-4 gap-8 grid-rows-5">
-            {arrProducts.map((item, index) => {
-                console.log(item, "index")
-                return (
-                   <>
-                       <ProductItem key={index.toString()} {...item}/>
-                   </>
-                )})}
+        <div className={"max-w-6xl ml-auto"}>
+            <div className="grid grid-cols-4 gap-x-4 gap-x-8 gap-y-10 grid-rows-5">
+                {arrProducts.map((item, index) => {
+                    console.log(item, "index")
+                    return (
+                        <>
+                            <ProductItem key={item.id.toString()} {...item}/>
+                        </>
+                    )})}
+            </div>
         </div>
     );
 };

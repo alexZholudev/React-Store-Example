@@ -9,11 +9,11 @@ const Header: FC = () => {
         }
     });
     return (
-        <header ref={headerRef} className='bg-header-top z-40 fixed left-0 shadow-header-top right-0 opacity-70 filter top-0 backdrop-blur-2xl backdrop-opacity-20 shadow-current'>
+        <header ref={headerRef} className='bg-header-top mix-blend-difference z-40 fixed left-0 shadow-header-top right-0 opacity-80 filter top-0 backdrop-blur-3xl backdrop-opacity-10 shadow-current'>
             <div className="container">
                 <div className="wrap">
                    <span className="inline-block py-1.5">
-                        <h1 className={"text-gray-50 outline-title uppercase text-4xl duration-1000 p-2"}>
+                        <h1 className={"text-gray-50 outline-title  uppercase text-4xl duration-1000 p-2"}>
                            <NavLink to={"/"}>
                                 Logo
                            </NavLink>

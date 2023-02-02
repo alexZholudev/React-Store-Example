@@ -1,7 +1,8 @@
+@import "App.css";
+/* Tailwind */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 
 @layer components {
     .btn-blue {
@@ -14,5 +15,9 @@
 
     .wrap {
         @apply flex justify-center  items-center;
+    }
+
+    .modal-root{
+        @apply bg-gradient-to-b backdrop-grayscale-0 from-gray-900 to-white shadow-2xl shadow-current fixed left-0 w-full h-full z-50;
     }
 }
