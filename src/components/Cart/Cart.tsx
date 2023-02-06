@@ -21,28 +21,9 @@ const Cart:FC<CartProps> = ({show,close}) => {
     const [translate, setTranslate] = useState<number | string>("-200%");
     const items = useTypedSelector(state => state.cart.Products) as CartResArr[];
     const [currCartElem, setCurrCartElem] = useState<CartResArr[]>([]);
-    const total = items.reduce((acc, item) => {
+    const total = currCartElem.reduce((acc, item) => {
         return acc + item.price
     }, 0)
-
-
-    // const addCount = (arr )=> {
-    //   return arr.reduce((acc:Array<IProducts & Record<"count", number>>, current:IProducts) => {
-    //         current.count = 1;
-    //         const x = acc.find(item => item.id === current.id);
-    //         if (!x) {
-    //             return acc.concat([current]);
-    //         } else {
-    //             if (x.count === undefined) {
-    //                 x.count = 1;
-    //             }else{
-    //             x.count++;
-    //             return acc;
-    //             }
-    //         }
-    //     }, [] as Array<CartRes>);
-    // }
-
 
 
 
@@ -78,52 +59,58 @@ const Cart:FC<CartProps> = ({show,close}) => {
         }
     }, [show, items]);
 
+    const deleteItem = (id:number) => {
+        console.log(id, "id")
+        setCurrCartElem(currCartElem.filter((item) => item.id !== id))
+    }
+
     return (
-       <>
-           show && (
-               <div   className="top-0 right-0 bottom-0 left-0 absolute w-full z-50 bg-header-top/[.68]">
-                   <div style={{translate}} className="border-emerald-500 animate-item border-4 bg-white max-w-xl p-6 rounded-br-lg rounded-tr-lg h-full">
-                      <div className="flex items-center justify-between">
-                          <h3 className="text-header-top text-2xl">
-                              Cart {items.length ? `${items.length} items for` : ""} {total ? `${total}$` : ""}
-                          </h3>
-                          <button className="text-header-top" onClick={close}>
-                              X
-                          </button>
-                      </div>
-                       <div className="flex flex-col mt-4">
-                           {
-                               !currCartElem.length && (
-                                   <div className="w-full h-full">
-                                       <p>
-                                           Cart is empty
-                                       </p>
-                                   </div>
-                               )
-                           }
-                           {
-                               currCartElem.map((item,index) => {
-                                     return (
-                                        <div key={index.toString()} className="flex">
-                                            <img src={item.image} className="mr-auto object-cover bg-[length:50%] bg-center" height={75} width={75} alt=""/>
-                                            <div className="w-64">
-                                                <p className="text-header-top text-sm">
-                                                    {item.title}
-                                                </p>
-                                                <p>
-                                                    {item.category}
-                                                </p>
-                                                {item.count}X {item.price}$ = {item.count * item.price}$
-                                            </div>
+        <>
+            show && (
+            <div   className="top-0 right-0 bottom-0 left-0 absolute w-full z-50 bg-header-top/[.68]">
+                <div style={{translate}} className="border-emerald-500 animate-item border-4 bg-white max-w-xl p-6 rounded-br-lg rounded-tr-lg h-full">
+                    <div className="flex items-center justify-between">
+                        <h3 className="text-header-top text-2xl">
+                            Cart {currCartElem.length ? `${currCartElem.length} items for` : ""} {total ? `${total}$` : ""}
+                        </h3>
+                        <button className="text-header-top" onClick={close}>
+                            X
+                        </button>
+                    </div>
+                    <div className="flex flex-col mt-4">
+                        {
+                            !currCartElem.length && (
+                                <div className="w-full h-full">
+                                    <p>
+                                        Cart is empty
+                                    </p>
+                                </div>
+                            )
+                        }
+                        {
+                            currCartElem.map((item,index) => {
+                                return (
+                                    <div key={index.toString()} className="flex">
+                                        <img src={item.image} className="mr-auto object-cover bg-[length:30%] bg-center" height={75} width={75} alt=""/>
+                                        <div className="w-64">
+                                            <p className="text-header-top text-sm">
+                                                {item.title}
+                                            </p>
+                                            <p>
+                                                {item.category}
+                                            </p>
+                                            {item.count} X {item.price}$ = {item.count * item.price}$
                                         </div>
-                                     )
-                                 })
-                           }
-                       </div>
-                   </div>
-               </div>
-           )
-       </>
+                                        <button onClick={() => deleteItem(item.id)}>X</button>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+                </div>
+            </div>
+            )
+        </>
     );
 };
 

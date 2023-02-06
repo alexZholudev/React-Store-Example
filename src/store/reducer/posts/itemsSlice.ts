@@ -23,8 +23,7 @@ export const itemsSlice = createSlice({
             state.countItems = state.Products.length;
         },
         cartAdd: (state, action: PayloadAction<any>) => {
-            // state.Products.push(action.payload);
-
+            state.Products.push(action.payload);
             cartLength();
         },
         cartRemove: (state, action: PayloadAction<any>) => {
@@ -42,7 +41,6 @@ export const itemsSlice = createSlice({
 })
 
 // export const { increment, decrement, incrementByAmount } = counterSlice.actions
-
 // export const selectCount = (state: RootState) => state.value
 export const { cartLength,cartAdd,cartRemove,cartClear,toggleCart } = itemsSlice.actions;
 
