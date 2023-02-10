@@ -1,6 +1,7 @@
 import React, {FC, useEffect, useState} from 'react';
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import {IProducts} from "../../shared/interfaces/app.interface";
+import {useActions} from "../../hooks/useActions";
 interface CartProps {
     show: boolean
     close: () => void
@@ -9,8 +10,6 @@ interface CartProps {
 type CartRes = IProducts & {count?: number}
 type CartResArr = IProducts & {count: number}
 interface cartItem extends IProducts  {count: number}
-
-
 
 interface CartItemReduced {
     acc:Array<CartResArr>
@@ -25,44 +24,30 @@ const Cart:FC<CartProps> = ({show,close}) => {
         return acc + item.price
     }, 0)
 
-
+    const {cartUpdate} = useActions()
 
     useEffect(() => {
         document.body.classList.add("overflow-hidden");
         setTranslate(show ? 0 : "-200%");
-        // const reds = [...items] as cartItem[];
-
-        const arr = Array.from(Object.create(items)).map((elem) => {
-            return {
-                ...elem as IProducts,
-                count: 1
-            }
-        })
-
-        const res = arr.reduce<cartItem[]>((acc, current): any => {
-            const x = acc.find(item => item.id === current.id);
-            if (!x) {
-                return acc.concat([current]);
-            } else {
-                if (x.count === undefined) {
-                    x.count = 1;
-                } else {
-                    x.count++;
-                    return acc;
-                }
-            }
-        }, [] as any[]);
-        setCurrCartElem(res)
-        console.log(currCartElem, "currCartElem")
         return () => {
             document.body.classList.remove("overflow-hidden");
         }
     }, [show, items]);
 
     const deleteItem = (id:number) => {
-        console.log(id, "id")
-        setCurrCartElem(currCartElem.filter((item) => item.id !== id))
+
     }
+
+    const addCount = ({count,id}: {count:number,id:number}) => {
+        count++;
+        cartUpdate({count,id})
+    }
+
+    const removeCount = ({count,id}: {count:number,id:number}) => {
+        count--;
+        cartUpdate({count,id})
+    }
+
 
     return (
         <>
@@ -79,7 +64,7 @@ const Cart:FC<CartProps> = ({show,close}) => {
                     </div>
                     <div className="flex flex-col mt-4">
                         {
-                            !currCartElem.length && (
+                            !items.length && (
                                 <div className="w-full h-full">
                                     <p>
                                         Cart is empty
@@ -88,20 +73,24 @@ const Cart:FC<CartProps> = ({show,close}) => {
                             )
                         }
                         {
-                            currCartElem.map((item,index) => {
+                            items.map((item,index) => {
                                 return (
-                                    <div key={index.toString()} className="flex">
-                                        <img src={item.image} className="mr-auto object-cover bg-[length:30%] bg-center" height={75} width={75} alt=""/>
+                                    <div key={index.toString()} className="flex mb-4">
+                                        <img src={item.image} className="mr-auto object-cover bg-[length:20%] bg-center" height={80} width={80} alt=""/>
                                         <div className="w-64">
-                                            <p className="text-header-top text-sm">
-                                                {item.title}
+                                            <p className="text-header-top max-w-lg text-sm">
+                                                {item.title}...
                                             </p>
                                             <p>
                                                 {item.category}
                                             </p>
-                                            {item.count} X {item.price}$ = {item.count * item.price}$
+                                            {item.count} X {item.price}$ = {(item.count * item.price).toFixed(2)}$
                                         </div>
-                                        <button onClick={() => deleteItem(item.id)}>X</button>
+                                        <div className="flex flex-col justify-between">
+                                            <button className="mb-1 text-header-top" onClick={() => deleteItem(item.id)}>X</button>
+                                            <button className="mb-1 text-header-top" onClick={() => addCount({count:item.count,id:item.id})}>+1</button>
+                                            <button className="text-header-top" onClick={() => removeCount({count:item.count,id:item.id})}>-1</button>
+                                        </div>
                                     </div>
                                 )
                             })
