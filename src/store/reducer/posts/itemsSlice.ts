@@ -1,8 +1,5 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 import {IProducts} from "../../../shared/interfaces/app.interface";
-
-
-type CartRes = IProducts & { count?: number }
 type CartResArr = IProducts & { count: number }
 
 interface cartItem extends IProducts {
