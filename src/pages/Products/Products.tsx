@@ -123,7 +123,7 @@ const Products = () => {
                                 pagination.map((item) => {
                                     return <button
                                         disabled={item === currentPage}
-                                        className={`bg-black mr-4 last:mr-0 text-emerald-500 border-4 border-emerald-500 font-bold py-2 px-4 rounded-lg ${currentPage === item ? "bg-emerald-500 text-black" : ""}`}
+                                        className={`bg-black mr-4 last:mr-0 text-emerald-500 border-4 border-emerald-500 font-bold py-2 px-4 rounded-lg ${currentPage === item ? "bg-emerald-500 text-header-top" : ""}`}
                                         key={item}
                                         onClick={() => pagBtnHandler(item)}>
                                         {item}
