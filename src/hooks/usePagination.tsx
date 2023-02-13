@@ -3,7 +3,6 @@ import {useCallback, useMemo, useState} from "react";
 export default function usePagination<T extends {category:string}>(items: T[], itemsPerPage: number , cat: string) {
     const [currentPage, setCurrentPage] = useState(1);
     let maxPage = Math.ceil(items.length / itemsPerPage);
-    // const [maxPage, setMaxPage] = useState(Math.ceil(items.length / itemsPerPage));
     const currentItems = useMemo(() => {
         const begin = (currentPage - 1) * itemsPerPage;
         const end = begin + itemsPerPage;
@@ -15,7 +14,7 @@ export default function usePagination<T extends {category:string}>(items: T[], i
                 acc.push(item);
             }
             return acc;
-        }, [] as T[]).sort(() => Math.random() - 0.5);
+        }, [] as T[]);
         maxPage = Math.ceil(filtered.length / itemsPerPage);
         return filtered.slice(begin, end);
     }, [currentPage, items, itemsPerPage,cat]);
