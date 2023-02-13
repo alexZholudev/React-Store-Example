@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/React-Store-Example/static/css/main.ce37afd7.css",
+    "main.js": "/React-Store-Example/static/js/main.02d22d17.js",
+    "static/media/star-regular.svg": "/React-Store-Example/static/media/star-regular.1e2fdc1a455cd1cd230f78ed1d3bf488.svg",
+    "index.html": "/React-Store-Example/index.html",
+    "main.ce37afd7.css.map": "/React-Store-Example/static/css/main.ce37afd7.css.map",
+    "main.02d22d17.js.map": "/React-Store-Example/static/js/main.02d22d17.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ce37afd7.css",
+    "static/js/main.02d22d17.js"
+  ]
+}
