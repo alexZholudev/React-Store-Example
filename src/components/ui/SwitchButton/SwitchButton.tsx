@@ -10,7 +10,7 @@ interface ISwitchButton {
     search?: boolean;
     discovery?: boolean;
     w?: string;
-    status: (val: number) => void;
+    status: (val: string) => void;
 }
 
 const SwitchButton: FC<ISwitchButton> = ({w,left = "electronics", middle = "jewelery",middle2= "men's clothing", right = "women's clothing", search, discovery,status,}) => {
@@ -23,7 +23,6 @@ const SwitchButton: FC<ISwitchButton> = ({w,left = "electronics", middle = "jewe
 
     const onSort = (val: number) => {
         let fromPX: number = 0;
-        status(val)
         setActive(val);
         if (wrapRef.current && bgRef.current) {
             const item = wrapRef.current.children[val].textContent;
@@ -32,29 +31,34 @@ const SwitchButton: FC<ISwitchButton> = ({w,left = "electronics", middle = "jewe
             if (val === 0) {
                 bgRef.current.style.transform = `translateX(${0}px)`;
                 fromPX = 0;
+                status("electronics");
             }
 
             if (val === 1) {
                 bgRef.current.style.transform = `translateX(${itemW}px)`;
                 fromPX = itemW;
+                status("jewelery");
+
             }
             if (val === 2) {
                 setFrom(translanteX);
                 bgRef.current.style.transform = `translateX(${itemW * 2}px)`;
                 fromPX = itemW * 2;
+                status("men's clothing");
             }
             if (val === 3) {
                 setFrom(translanteX);
                 bgRef.current.style.transform = `translateX(${itemW * 3}px)`;
                 fromPX = itemW * 3;
+                status("women's clothing")
             }
         }
     };
 
     return (
-        <div className={'relative h-12 border-emerald-500 border-2 w-full rounded-[28px] mx-auto mb-12' + ` ${w ? w : 'w-1/2'}`}>
+        <div className={'relative h-12 border-emerald-500 border-2 w-full rounded-[28px]' + ` ${w ? w : 'w-1/2'}`}>
             <div ref={bgRef} className={"left-0 top-0 ease-linear duration-300 absolute w-1/4 flex justify-center text-md flex items-center justify-center h-11 border-emerald-500 border-2 rounded-[28px] items-center bg-emerald-500"}>
-                <span className={"text-stone-100 text-center"}>{value}</span>
+                <span className={"text-stone-100 uppercase text-center"}>{value}</span>
             </div>
             <div ref={wrapRef} className={``}>
                 <button className={`w-1/4 h-12  text-sm text-stone-100  uppercase`} onClick={() => onSort(0)}>
