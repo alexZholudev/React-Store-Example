@@ -1,0 +1,14 @@
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200
+
+[[redirects]]
+from = "/products/*"
+to = "/products"
+status = 200
+
+[[redirects]]
+from = "/product/*"
+to = "/product/:cat:/:id"
+status = 200
