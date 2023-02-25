@@ -44,7 +44,11 @@ module.exports = {
       rose: colors.rose,
       header: {
       'top': '#0E0E0E',
-    }
+    },
+      bg: {
+        black: '#0E0E0E',
+        white: '#eff0f2',
+      }
     }),
     columns: {
       auto: 'auto',

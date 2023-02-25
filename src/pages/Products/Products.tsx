@@ -100,7 +100,7 @@ const Products = () => {
                     {
                         (status === "success" && data !== undefined) && (
                             <div className={"max-w-6xl mx-auto"}>
-                                <div className="grid grid-cols-4 gap-x-4 gap-x-8 gap-y-10 grid-rows-5">
+                                <div className="flex items-center flex-wrap gap-y-10 gap-x-12">
                                     {currentData.map((item, index) => (
                                         <ProductItem key={index.toString()} {...item}/>
                                     ))}
@@ -123,10 +123,12 @@ const Products = () => {
                                 pagination.map((item) => {
                                     return <button
                                         disabled={item === currentPage}
-                                        className={`bg-black mr-4 last:mr-0 text-emerald-500 border-4 border-emerald-500 font-bold py-2 px-4 rounded-lg ${currentPage === item ? "bg-emerald-500 text-header-top" : ""}`}
+                                        className={`bg-black mr-4 last:mr-0 text-emerald-500 border-4 border-emerald-500 font-bold py-2 px-4 rounded-lg`}
                                         key={item}
                                         onClick={() => pagBtnHandler(item)}>
-                                        {item}
+                                        <span className="text-emerald-500">
+                                            {item}
+                                        </span>
                                     </button>
                                 })
                             }

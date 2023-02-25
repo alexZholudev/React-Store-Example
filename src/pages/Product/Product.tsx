@@ -2,7 +2,11 @@ import React from 'react';
 import {useParams} from "react-router-dom";
 import {useQueries, UseQueryOptions} from "@tanstack/react-query";
 import {IProducts} from "../../shared/interfaces/app.interface";
+import Header from "components/Header/Header";
+import usePortal from "../../hooks/usePortal";
+import {Preloader} from "../../components/Preloader/Preloader";
 type paramsUseProducts = [string|undefined, string | undefined];
+
 const useProducts = (arrParams:paramsUseProducts) => {
     if (arrParams[0] !== undefined && arrParams[1] !== undefined) {
         return  useQueries({
@@ -17,39 +21,61 @@ const useProducts = (arrParams:paramsUseProducts) => {
     }
 }
 
+
 const Product = () => {
     const  {id , cat} = useParams();
     const fixedCat = cat?.replace(/%/g, " ");
 
    const res = useProducts([fixedCat,id]);
+    console.log(res, "res")
    const {data:dataCat, status:statusCat,isLoading:isLoadCat,error:isErrCat} = res[0];
-   const {data, status,isLoading,error,isError} = res[1];
+    const PreloaderPortal = usePortal(
+        <Preloader/>
+    );
 
-   if (isLoadCat && isLoading) return null
-    console.log(dataCat,'dataCat')
-    return (
-        <div className="text-white">
-            Product {id} . Cat is {fixedCat}
-            {
-                statusCat === "success" && dataCat.map((item:IProducts,index) => {
-                    return (
-                        <div key={index.toString()}>
-                            <p>
-                                {item.title} - {item.price} - {item.category}
-                            </p>
-                            <div className="border-red-900 border-2">
-                                <img src={item.image} height={300} width={300} alt=""/>
-                            </div>
-                            <div>{item.description}</div>
-                            <div>
-                                <img width={150} height={150} src={item.image} alt=""/>
+   const {data,status,isLoading,error,isError} = res[1];
+    if (isLoadCat && isLoading && dataCat === undefined) {
+       return PreloaderPortal
+   }
+
+
+    const {title,price,description,image} = data as IProducts[];
+
+
+    if (status === "success" && statusCat === "success") {
+
+        console.log(dataCat, "dataCat")
+        // console.log(data, "data")
+        return (
+            <>
+                <Header/>
+                <section>
+                    <div className="container">
+                        <div className="wrap">
+                            <div className="flex flex-col p-3.5">
+                                <div className="max-w-2xl max-h-12">
+                                    <img src={data} className="w-full h-full" alt="img 1"/>
+                                </div>
+                                <div className="product__info">
+                                    <div className="product__info__title">
+                                        <h2>{data.title}</h2>
+                                    </div>
+                                    <div className="product__info__price">
+                                        <h2>{data.price}</h2>
+                                    </div>
+                                    <div className="product__info__description">
+                                        <p>{data.description}</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    )
-                })
-            }
-        </div>
-    );
+                    </div>
+                </section>
+            </>
+        );
+    }else{
+        return <div>404</div>
+    }
 };
 
 export default Product;

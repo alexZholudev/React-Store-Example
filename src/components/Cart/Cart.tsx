@@ -1,7 +1,8 @@
 import React, {FC, useEffect, useState} from 'react';
-import {useTypedSelector} from "../../hooks/useTypedSelector";
-import {IProducts} from "../../shared/interfaces/app.interface";
-import {useActions} from "../../hooks/useActions";
+import {useTypedSelector} from "hooks/useTypedSelector";
+import {IProducts} from "shared/interfaces/app.interface";
+import {useActions} from "hooks/useActions";
+import {ButtonCart} from "components/ui/ButtonCart/ButtonCart";
 interface CartProps {
     show: boolean
     close: () => void
@@ -24,7 +25,13 @@ const Cart:FC<CartProps> = ({show,close}) => {
         return acc + item.price
     }, 0)
 
-    const {cartUpdate} = useActions()
+
+    const cleared = () => {
+        cartClear();
+        setTimeout(close, 1500)
+    }
+
+    const { cartUpdate ,cartRemove,cartClear } = useActions()
 
     useEffect(() => {
         document.body.classList.add("overflow-hidden");
@@ -35,7 +42,7 @@ const Cart:FC<CartProps> = ({show,close}) => {
     }, [show, items]);
 
     const deleteItem = (id:number) => {
-
+        cartRemove(id)
     }
 
     const addCount = ({count,id}: {count:number,id:number}) => {
@@ -62,20 +69,22 @@ const Cart:FC<CartProps> = ({show,close}) => {
                             X
                         </button>
                     </div>
-                    <div className="flex flex-col mt-4">
+                    <div className="flex flex-col mt-4 h-[90%]">
                         {
                             !items.length && (
                                 <div className="w-full h-full">
-                                    <p>
-                                        Cart is empty
-                                    </p>
+                                    <div className="flex justify-center items-center w-full h-[80vh]">
+                                        <p>
+                                            Cart is empty
+                                        </p>
+                                    </div>
                                 </div>
                             )
                         }
                         {
                             items.map((item,index) => {
                                 return (
-                                    <div key={index.toString()} className="flex mb-4">
+                                    <div key={index.toString()} className="flex mb-10">
                                         <img src={item.image} className="mr-auto object-cover bg-[length:20%] bg-center" height={80} width={80} alt=""/>
                                         <div className="w-64">
                                             <p className="text-header-top max-w-lg text-sm">
@@ -96,6 +105,7 @@ const Cart:FC<CartProps> = ({show,close}) => {
                             })
                         }
                     </div>
+                    <ButtonCart title={"Clear Cart"} disabled={!!items.length} onClick={cleared} />
                 </div>
             </div>
             )

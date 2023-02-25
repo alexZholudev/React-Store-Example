@@ -44,8 +44,8 @@ export const itemsSlice = createSlice({
             }, [] as cartItem[]);
             cartLength();
         },
-        cartRemove: (state, action: PayloadAction<any>) => {
-            state.Products = state.Products.filter((item: any) => item.id !== action.payload.id);
+        cartRemove: (state, action: PayloadAction<number>) => {
+            state.Products = state.Products.filter((item) => item.id !== action.payload);
             cartLength();
         },
         cartClear: (state) => {
