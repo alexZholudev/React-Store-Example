@@ -6,7 +6,6 @@ interface cartItem extends IProducts {
     count: number
 }
 
-// Define a type for the slice state
 interface CounterState {
     countItems: number
     Products: cartItem[]
@@ -70,9 +69,6 @@ export const itemsSlice = createSlice({
         }
     }
 })
-
-// export const { increment, decrement, incrementByAmount } = counterSlice.actions
-// export const selectCount = (state: RootState) => state.value
 export const {cartLength, cartAdd, cartRemove, cartClear,cartUpdate ,toggleCart} = itemsSlice.actions;
 
 

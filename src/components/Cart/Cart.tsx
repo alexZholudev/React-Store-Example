@@ -75,7 +75,7 @@ const Cart:FC<CartProps> = ({show,close}) => {
                                 <div className="w-full h-full">
                                     <div className="flex justify-center items-center w-full h-[80vh]">
                                         <p>
-                                            Cart is empty
+                                            Cart empty
                                         </p>
                                     </div>
                                 </div>

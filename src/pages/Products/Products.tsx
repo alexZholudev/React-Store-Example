@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import Breadcrumbs from "components/Breadcrumbs/Breadcrumbs";
 import {IProducts} from "shared/interfaces/app.interface";
 import {useQuery} from "@tanstack/react-query";
@@ -18,16 +18,16 @@ const Products = () => {
     const {data, status, isLoading, error} = useQuery<IProducts[]>(["products"], {
         select: (data): IProducts[] =>
             [...data, ...data, ...data, ...data, ...data, ...data, ...data].sort(() => Math.random() - 0.5).map<IProducts>((item) => {
-            return {
-                ...item,
-                title: item.title.slice(0, 35),
-                description: item.title.slice(0, 100),
-            }
-        }),
+                return {
+                    ...item,
+                    title: item.title.slice(0, 35),
+                    description: item.title.slice(0, 100),
+                }
+            }),
         // enabled: isLoad,
     })
     const isOpen = useTypedSelector((state) => state.cart.isOpen)
-    const { toggleCart } = useActions()
+    const {toggleCart} = useActions()
     const PreloaderPortal = usePortal(
         <Preloader/>
     );
@@ -35,7 +35,7 @@ const Products = () => {
         <Cart show={isOpen} close={() => toggleCart(false)}/>
     );
     const [limit, setLimit] = useState(20);
-    const pagBtnHandler = (num:number) => {
+    const pagBtnHandler = (num: number) => {
         jump(num);
         window.scrollTo(0, 0);
     }
@@ -48,10 +48,10 @@ const Products = () => {
         currentPage,
         maxPage,
         setCurrentPage,
-    } = usePagination<IProducts>(data??[], limit, currentSwitch);
+    } = usePagination<IProducts>(data ?? [], limit, currentSwitch);
     console.log(pagination, "pagination")
 
-    const switchHandler = (str:string) => {
+    const switchHandler = (str: string) => {
         setCurrentPage(1);
         setCurrentSwitch(str)
     }
@@ -66,7 +66,6 @@ const Products = () => {
     if (isLoading) {
         return PreloaderPortal;
     }
-
     return (
         <>
             {isOpen && CartPortal}
@@ -88,8 +87,10 @@ const Products = () => {
                     <div className="container max-w-4xl">
                         <div className="flex items-center mx-auto">
                             <SwitchButton w={"max-w-3xl"} status={(str) => switchHandler(str)}/>
-                            <button className="text-stone-100 rounded-full bg-emerald-400/[.88]  border-2 border-emerald-600 h-12 w-12 ml-5" onClick={() => switchAll()}>
-                                <span className={currentSwitch==="all"? "text-black": ""}>
+                            <button
+                                className="text-stone-100 rounded-full bg-emerald-400/[.88]  border-2 border-emerald-600 h-12 w-12 ml-5"
+                                onClick={() => switchAll()}>
+                                <span className={currentSwitch === "all" ? "text-black" : ""}>
                                     All
                                 </span>
                             </button>
@@ -98,7 +99,7 @@ const Products = () => {
                 </section>
                 <section className="section-offset">
                     {
-                        (status === "success" && data !== undefined) && (
+                        // () && (
                             <div className={"max-w-6xl mx-auto"}>
                                 <div className="flex items-center flex-wrap gap-y-10 gap-x-12">
                                     {currentData.map((item, index) => (
@@ -106,7 +107,7 @@ const Products = () => {
                                     ))}
                                 </div>
                             </div>
-                        )
+                        // )
                     }
                     <div className="mx-auto max-w-2xl mt-20">
                         <b className="text-emerald-500 text-2xl w-full flex justify-center mb-5">
