@@ -9,7 +9,6 @@ import {ButtonCart} from "../../components/ui/ButtonCart/ButtonCart";
 import {StarsIcon} from "shared/icons/iconsElement";
 type paramsUseProducts = [string | undefined, string | undefined];
 
-
 const useProducts = (arrParams: paramsUseProducts) => {
     if (arrParams[0] !== undefined && arrParams[1] !== undefined) {
         return useQueries({
@@ -80,7 +79,7 @@ const Product = () => {
                                 <div
                                     className="text-white w-1/4 mb-6 flex flex-col ml-6 text-lg hover:text-white/[.87]">
                                     <h2 className="flex items-center"><p
-                                        className="font-700 uppercase">Pricing</p>: {price} <span
+                                        className="font-700 uppercase">Pricing</p>: {price} &nbsp;<span
                                         className="text-emerald-500">$$$</span></h2>
                                     <p className="text-sm flex items-center"><span
                                         className="font-700 flex items-center">Category</span></p>
@@ -95,16 +94,21 @@ const Product = () => {
                                 </div>
                             </div>
                             <div
-                                className="max-w-xl h-[30rem] object-cover p-3.5 ease-linear duration-300 bg-white border-4 border-emerald-500 rounded-2xl w-full">
+                                className="max-w-xl flex flex-col justify-between h-[32rem] object-cover p-3.5 ease-linear duration-300 bg-white border-4 border-emerald-500 rounded-2xl w-full">
                                 <div className="p-1.5 flex items-center">
-                                    <p className="text-yellow-400 mr-8 text-2xl">
+                                    <p className="mr-8 text-2xl">
                                         {rating?.rate}
                                     </p>
                                     <StarsIcon width={25} height={25}/>
                                 </div>
-                                <img ref={imgRef} width={325} height={275} src={image}
-                                     className="w-full object-contain ease-in-out duration-300 h-full"
-                                     alt="img 1"/>
+                                <div className="h-96">
+                                    <img ref={imgRef}
+                                         width={325}
+                                         height={275}
+                                         src={image}
+                                         className="w-full object-contain ease-in-out duration-300 h-full"
+                                         alt="img 1"/>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -7,7 +7,6 @@ import {store} from "./store/store";
 import {BrowserRouter} from "react-router-dom";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import { queryFnFetch} from "./hooks/useFetch";
-
 const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
@@ -17,7 +16,6 @@ const queryClient = new QueryClient({
         },
     },
 });
-
 const container = document.getElementById("root");
 if (!container) {
     throw new Error("no container to render to");
@@ -32,4 +30,3 @@ root.render(
         </Provider>
     </QueryClientProvider>
 );
-
